@@ -1,6 +1,6 @@
 //board
-static uint32 BOARD_LINES = 12;
-static uint32 BOARD_COLUMNS = 6;
+static const uint32 BOARD_LINES = 12;
+static const uint32 BOARD_COLUMNS = 6;
 
 //piece & piece type
 typedef enum
