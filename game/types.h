@@ -25,3 +25,12 @@ struct Line
 	uint32 CoordY;
 	Piece *PiecesArr;
 };
+
+static struct GameState
+{
+	renderer::SpriteBatch* spriteBatch;
+	Mat4 modelMatrix;
+	Mat4 projMatrix;
+	HMaterial material;
+	renderer::Sprite sprite;
+} *_gameState;

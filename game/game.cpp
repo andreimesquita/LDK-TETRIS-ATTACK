@@ -3,16 +3,6 @@
 using namespace ldk;
 
 #include "types.h"
-
-static struct GameState
-{
-	renderer::SpriteBatch* spriteBatch;
-	Mat4 modelMatrix;
-	Mat4 projMatrix;
-	HMaterial material;
-	renderer::Sprite sprite;
-} *_gameState;
-
 #include "gameplay.hpp"
 #include "view.hpp"
 
