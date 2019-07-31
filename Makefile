@@ -33,7 +33,6 @@ compile: $(ENTRY_POINT_CPP)
 	
 	@echo Compiling...
 	cl $(ENTRY_POINT_CPP) /Fo$(OUTDIR) /Fe$(LDK_GAME) /LD $(CFLAGS) /link /subsystem:windows $(LIBDIR)/ldk.lib
-	
 	@echo Moving assets into build folder...
 	IF EXIST "assets" xcopy assets $(OUTDIR)\assets /Y /I /E /F > nul
 	IF EXIST "game\assets" xcopy game\assets $(OUTDIR)\assets /Y /I /E /F > nul

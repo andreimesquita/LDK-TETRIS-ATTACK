@@ -1,1 +1,1 @@
-vcvars64 && nmake && cmd /k
+vcvars64 && (nmake || cmd /k) && cmd /k

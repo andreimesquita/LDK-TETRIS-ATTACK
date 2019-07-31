@@ -13,17 +13,8 @@ static struct GameState
 	renderer::Sprite sprite;
 } *_gameState;
 
-#include "view.h"
-
-void initializePieces()
-{
-	//TODO
-};
-
-void initializeBoard()
-{
-	//TODO
-};
+#include "gameplay.hpp"
+#include "view.hpp"
 
 LDKGameSettings gameInit()
 {
@@ -61,8 +52,7 @@ void gameStart(void* memory)
 
 void gameUpdate(float deltaTime)
 {
-	//TODO
-	draw();
+	view::draw();
 };
 
 void gameStop()
