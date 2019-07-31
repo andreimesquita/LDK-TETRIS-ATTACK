@@ -27,9 +27,9 @@ LINKFLAGS=$(DEBUG_LINK_OPTIONS)
 
 .PHONY: clean compile
 
-compile: match3.cpp
+compile: game.cpp
 	IF NOT EXIST "$(OUTDIR)\" @mkdir $(OUTDIR)
-	cl match3.cpp /Fo$(OUTDIR) /Fe$(LDK_GAME) /LD $(CFLAGS) /link /subsystem:windows $(HOT_RELOAD_OPTIONS) $(LIBDIR)/ldk.lib
+	cl game.cpp /Fo$(OUTDIR) /Fe$(LDK_GAME) /LD $(CFLAGS) /link /subsystem:windows $(LIBDIR)/ldk.lib
 	xcopy assets $(OUTDIR)\assets /Y /I /E /F > nul
 	copy /Y $(LDK_EDITOR) $(OUTDIR)\tetrisatk.exe
 	
@@ -37,4 +37,4 @@ run:
 	$(OUTDIR)\tetrisatk.exe
 
 clean:
-	IF EXIST $(OUTDIR)\match3 rd /S /Q $(OUTDIR)\match3 > nul
+	IF EXIST $(OUTDIR)\game rd /S /Q $(OUTDIR)\game > nul
