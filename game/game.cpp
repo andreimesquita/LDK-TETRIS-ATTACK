@@ -1,15 +1,13 @@
 #include <ldk/ldk.h>
 using namespace ldk;
 
-typedef struct GameState {
+static struct GameState {
 	renderer::SpriteBatch* spriteBatch;
 	Mat4 modelMatrix;
 	Mat4 projMatrix;
 	HMaterial material;
 	renderer::Sprite sprite;
-};
-
-static GameState *_gameState;
+} *_gameState;
 
 LDKGameSettings gameInit()
 {
