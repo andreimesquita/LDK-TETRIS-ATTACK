@@ -1,1 +1,1 @@
-vcvars64 && (cd game\match3 && nmake) && cmd /k
+vcvars64 && (nmake) && cmd /k
