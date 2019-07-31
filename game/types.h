@@ -3,7 +3,7 @@ static const uint32 BOARD_LINES = 12;
 static const uint32 BOARD_COLUMNS = 6;
 
 //piece & piece type
-typedef enum
+enum PieceType
 {
 	GREEN = 0,
 	PURPLE,
@@ -13,7 +13,7 @@ typedef enum
 	DARK_BLUE,
 	EXCLAMATION_MARK,
 	PIECE_TYPE_LENGTH
-} PieceType;
+};
 
 struct Piece
 {
@@ -32,5 +32,5 @@ static struct GameState
 	Mat4 modelMatrix;
 	Mat4 projMatrix;
 	HMaterial material;
-	renderer::Sprite sprite;
+	renderer::Sprite sprites[PieceType::PIECE_TYPE_LENGTH];
 } *_gameState;

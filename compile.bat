@@ -1,1 +1,3 @@
-vcvars64 && (nmake || cmd /k) && cmd /k
+call vcvars64
+nmake
+pause

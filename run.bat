@@ -1,1 +1,1 @@
-(nmake run) && cmd /k
+nmake run
