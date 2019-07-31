@@ -1,13 +1,27 @@
 #include <ldk/ldk.h>
+
 using namespace ldk;
 
-static struct GameState {
+#include "tetris_attack_types.h"
+
+static struct GameState
+{
 	renderer::SpriteBatch* spriteBatch;
 	Mat4 modelMatrix;
 	Mat4 projMatrix;
 	HMaterial material;
 	renderer::Sprite sprite;
 } *_gameState;
+
+void initializePieces()
+{
+	//TODO
+};
+
+void initializeBoard()
+{
+	//TODO
+};
 
 LDKGameSettings gameInit()
 {
@@ -19,7 +33,7 @@ LDKGameSettings gameInit()
   settings.name = "LDK Tetris Attack";
   settings.preallocMemorySize = sizeof(GameState);
   return settings;
-}
+};
 
 void gameStart(void* memory)
 {
@@ -41,20 +55,24 @@ void gameStart(void* memory)
   
   // Initialize the sprite batch
   _gameState->spriteBatch = renderer::spriteBatch_create(16); 
-}
+};
+
+void draw()
+{
+	renderer::clearBuffers(renderer::Context::COLOR_BUFFER | renderer::Context::DEPTH_BUFFER);
+	ldk::renderer::spriteBatch_begin(_gameState->spriteBatch);
+	ldk::renderer::spriteBatch_draw(_gameState->spriteBatch ,&_gameState -> sprite,10 ,10 ,32 ,32 ,0);
+	ldk::renderer::spriteBatch_end(_gameState->spriteBatch);
+};
 
 void gameUpdate(float deltaTime)
 {
-  renderer::clearBuffers(renderer::Context::COLOR_BUFFER | renderer::Context::DEPTH_BUFFER);
-  ldk::renderer::spriteBatch_begin(_gameState->spriteBatch);
-  ldk::renderer::spriteBatch_draw(_gameState->spriteBatch ,&_gameState -> sprite
-									,10 ,10 ,32 ,32 ,0);
-  ldk::renderer::spriteBatch_end(_gameState->spriteBatch);
-}
+  draw();
+};
 
 void gameStop()
 {
   ldk::renderer::material_destroy(_gameState->material);
   ldk::renderer::spriteBatch_destroy(_gameState->spriteBatch);
   ldk::renderer::context_finalize();
-}
+};
