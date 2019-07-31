@@ -1,0 +1,1 @@
+(cd game\match3 && nmake run) && cmd /k

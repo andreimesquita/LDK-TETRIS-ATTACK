@@ -25,7 +25,9 @@ RELEASE_LINK_OPTIONS=/link /subsystem:windows $(LIBS)
 CFLAGS=$(DEBUG_COMPILE_OPTIONS)
 LINKFLAGS=$(DEBUG_LINK_OPTIONS)
 
-match3: match3.cpp
+.PHONY: clean compile
+
+compile: match3.cpp
 	IF NOT EXIST "$(OUTDIR)\" @mkdir $(OUTDIR)
 	cl match3.cpp /Fo$(OUTDIR) /Fe$(LDK_GAME) /LD $(CFLAGS) /link /subsystem:windows $(HOT_RELOAD_OPTIONS) $(LIBDIR)/ldk.lib
 	xcopy assets $(OUTDIR)\assets /Y /I /E /F > nul

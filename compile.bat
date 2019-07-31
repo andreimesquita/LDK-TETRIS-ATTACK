@@ -1,0 +1,1 @@
+vcvars64 && (cd game\match3 && nmake) && cmd /k

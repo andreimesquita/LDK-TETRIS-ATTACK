@@ -1,1 +1,0 @@
-vcvars64 && nmake && cmd /k

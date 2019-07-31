@@ -1,1 +1,0 @@
-nmake run && cmd /k
