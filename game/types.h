@@ -1,11 +1,13 @@
 //board
 static const uint32 BOARD_LINES = 12;
 static const uint32 BOARD_COLUMNS = 6;
+static const uint32 LINES_ARRAY_LENGTH = 24;
 
 //piece & piece type
 enum PieceType
 {
-	GREEN = 0,
+	EMPTY = 0,
+	GREEN,
 	PURPLE,
 	RED,
 	YELLOW,
@@ -17,7 +19,7 @@ enum PieceType
 
 struct Piece
 {
-	PieceType Type;
+	PieceType Type = PieceType::EMPTY;
 };
 
 struct Line
@@ -26,11 +28,14 @@ struct Line
 	Piece *PiecesArr;
 };
 
+static Line EMPTY_LINE;
+
 static struct GameState
 {
 	renderer::SpriteBatch* spriteBatch;
 	Mat4 modelMatrix;
 	Mat4 projMatrix;
 	HMaterial material;
-	renderer::Sprite sprites[PieceType::PIECE_TYPE_LENGTH];
+	renderer::Sprite sprites[PIECE_TYPE_LENGTH];
+	Line lines[LINES_ARRAY_LENGTH];
 } *_gameState;

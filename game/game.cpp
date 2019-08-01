@@ -18,9 +18,20 @@ LDKGameSettings gameInit()
 	return settings;
 };
 
+void initializeLines()
+{
+	//initialize lines by defining the CoordY of each
+	for (int i = 0; i < LINES_ARRAY_LENGTH; i++)
+	{
+		Line &line = _gameState->lines[i];
+		line.CoordY = i;
+	}
+};
+
 void gameStart(void* memory)
 {
 	_gameState = (GameState*)memory;
+	initializeLines();
 	view::initializeBoardSprites();
 };
 
