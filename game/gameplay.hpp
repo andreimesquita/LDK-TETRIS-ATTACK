@@ -10,12 +10,12 @@ namespace gameplay
 		return pieceA.Type == pieceB.Type;
 	};
 	
-	inline Piece& getPieceInLine(const Line &line, const uint32 columnIndex)
+	inline Piece& getPieceInLine(Line &line, const uint32 columnIndex)
 	{
 		return line.PiecesArr[columnIndex];
 	};
 	
-	inline Line& getLineByCoordinate(const uint32 lineIndex)
+	inline Line& getLineByCoordinate(const int lineIndex)
 	{
 		for (int i = 0; i < LINES_ARRAY_LENGTH; i++)
 		{
@@ -27,7 +27,7 @@ namespace gameplay
 		return EMPTY_LINE;
 	};
 	
-	inline bool isLineEmpty(const Line &line)
+	inline bool isLineEmpty(Line &line)
 	{
 		for (int i = 0; i < BOARD_COLUMNS; i++)
 		{

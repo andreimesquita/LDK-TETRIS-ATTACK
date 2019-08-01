@@ -1,8 +1,11 @@
 #include <ldk/ldk.h>
+#include <stdlib.h>
+#include <ctime>
+#include <cstdlib>
 
 using namespace ldk;
 
-#include "types.h"
+#include "types.hpp"
 #include "gameplay.hpp"
 #include "view.hpp"
 
@@ -26,6 +29,18 @@ void initializeLines()
 		Line &line = _gameState->lines[i];
 		line.CoordY = i;
 	}
+	
+	for (int l = 0; l < LINES_ARRAY_LENGTH; l++)
+	{
+		Line &line = _gameState->lines[l];
+		line.CoordY = l;
+		
+		for (int c = 0; c < BOARD_COLUMNS; c++)
+		{
+			Piece &piece = gameplay::getPieceInLine(line, c);
+			piece.Type = (PieceType) (rand() % PieceType::PIECE_TYPE_LENGTH);
+		}
+	}
 };
 
 void gameStart(void* memory)
@@ -33,6 +48,9 @@ void gameStart(void* memory)
 	_gameState = (GameState*)memory;
 	initializeLines();
 	view::initializeBoardSprites();
+	
+	unsigned int seed = (unsigned int)std::time(0);
+	std::srand(seed);
 };
 
 void gameUpdate(float deltaTime)

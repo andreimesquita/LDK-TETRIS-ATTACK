@@ -21,7 +21,7 @@ namespace view
 	//**********************
 	void initializePieceSprites()
 	{
-		for (int i = 1; i < PIECE_TYPE_LENGTH; i++)
+		for (int i = 0; i < PIECE_TYPE_LENGTH; i++)
 		{
 			renderer::makeSprite(&_gameState->sprites[i], _gameState->material,
 								(i*19), 0,
@@ -34,8 +34,8 @@ namespace view
 		Vec4 clearColor = Vec4{0.0f, 0.0f, 0.0f, 0.0f};
 		renderer::context_initialize(255, clearColor, 0);
 		_gameState->material = loadMaterial("./assets/piece.mat");
-		_gameState->projMatrix.orthographic(0, 600, 0, 800, -10, 10);
-		_gameState->spriteBatch = renderer::spriteBatch_create(1024);
+		_gameState->projMatrix.orthographic(0, WINDOW_WIDTH, 0, WINDOW_HEIGHT, -10, 10);
+		_gameState->spriteBatch = renderer::spriteBatch_create(256);
 		initializePieceSprites();
 	};
 	
@@ -49,21 +49,6 @@ namespace view
 	
 	inline void drawAllPieces()
 	{
-		return;
-		//TODO(andrei) double check with Freitas why this is crashing the game
-		renderer::spriteBatch_draw(_gameState->spriteBatch,
-										   &(_gameState->sprites[0]),
-										   (SCREEN_PIECE_SIZE * 0), (SCREEN_PIECE_SIZE * 1),
-										   SCREEN_PIECE_SIZE, SCREEN_PIECE_SIZE);
-		renderer::spriteBatch_draw(_gameState->spriteBatch,
-										   &(_gameState->sprites[0]),
-										   (SCREEN_PIECE_SIZE * 1), (SCREEN_PIECE_SIZE * 1),
-										   SCREEN_PIECE_SIZE, SCREEN_PIECE_SIZE);
-		renderer::spriteBatch_draw(_gameState->spriteBatch,
-										   &(_gameState->sprites[0]),
-										   (SCREEN_PIECE_SIZE * 2), (SCREEN_PIECE_SIZE * 1),
-										   SCREEN_PIECE_SIZE, SCREEN_PIECE_SIZE);
-										   
 		for (int l = 0; l < LINES_ARRAY_LENGTH; l++)
 		{
 			Line &line = _gameState->lines[l];
@@ -76,7 +61,7 @@ namespace view
 				
 				renderer::spriteBatch_draw(_gameState->spriteBatch,
 										   getSpriteByPieceType(piece.Type),
-										   (SCREEN_PIECE_SIZE * c), (SCREEN_PIECE_SIZE * l),
+										   (SCREEN_PIECE_SIZE * c), (SCREEN_PIECE_SIZE * line.CoordY),
 										   SCREEN_PIECE_SIZE, SCREEN_PIECE_SIZE);
 			}
 		}

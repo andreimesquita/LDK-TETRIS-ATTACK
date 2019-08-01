@@ -29,14 +29,12 @@ LINKFLAGS=$(DEBUG_LINK_OPTIONS)
 .PHONY: clean compile
 
 compile: $(ENTRY_POINT_CPP)
-	IF NOT EXIST "$(OUTDIR)\" @mkdir $(OUTDIR)
-	
 	@echo Compiling...
 	cl $(ENTRY_POINT_CPP) /Fo$(OUTDIR) /Fe$(LDK_GAME) /LD $(CFLAGS) /link /subsystem:windows $(LIBDIR)/ldk.lib
-	@echo Moving assets into build folder...
-	IF EXIST "assets" xcopy assets $(OUTDIR)\assets /Y /I /E /F > nul
-	IF EXIST "game\assets" xcopy game\assets $(OUTDIR)\assets /Y /I /E /F > nul
 	
+	@echo Moving assets into build folder...
+	xcopy game\assets $(OUTDIR)\assets /Y /I /E /F > nul
+	xcopy assets $(OUTDIR)\assets /Y /I /E /F > nul
 	copy /Y $(LDK_EDITOR) $(OUTDIR)\$(FINAL_EXE_NAME)
 	
 run:
