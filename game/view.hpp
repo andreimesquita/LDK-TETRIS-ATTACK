@@ -2,7 +2,7 @@ static const uint32 WINDOW_WIDTH = 600;
 static const uint32 WINDOW_HEIGHT = 800;
 static const float ASPECT_RATIO = 1.0f;
 static const uint32 PIECE_SIZE = 16;
-static const uint32 SCREEN_PIECE_SIZE = 32;
+static const uint32 SCREEN_PIECE_SIZE = 64;
 
 namespace view
 {
@@ -49,7 +49,7 @@ namespace view
 	
 	inline void drawAllPieces()
 	{
-		for (int l = 0; l < LINES_ARRAY_LENGTH; l++)
+		for (int l = 0; l < BOARD_LINES; l++)
 		{
 			Line &line = _gameState->lines[l];
 			

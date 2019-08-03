@@ -58,6 +58,12 @@ void gameUpdate(float deltaTime)
 	view::draw();
 };
 
+void gameViewResized(uint32 width, uint32 height)
+{
+	Rect rect = {0.0f, 0.0f, (float)height, (float)height};
+	renderer::setViewPort(rect);
+};
+
 void gameStop()
 {
 	renderer::material_destroy(_gameState->material);

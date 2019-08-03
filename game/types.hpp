@@ -6,15 +6,15 @@ static const uint32 LINES_ARRAY_LENGTH = 24;
 //piece & piece type
 enum PieceType
 {
-	EMPTY = 0,
-	GREEN = 1,
-	PURPLE = 2,
-	RED = 3,
-	YELLOW = 4,
-	LIGHT_BLUE = 5,
-	DARK_BLUE = 6,
-	EXCLAMATION_MARK = 7,
-	PIECE_TYPE_LENGTH = 8
+	GREEN = 0,
+	PURPLE,
+	RED,
+	YELLOW,
+	LIGHT_BLUE,
+	DARK_BLUE,
+	EXCLAMATION_MARK,
+	PIECE_TYPE_LENGTH,
+	EMPTY = 99,
 };
 
 struct Piece
