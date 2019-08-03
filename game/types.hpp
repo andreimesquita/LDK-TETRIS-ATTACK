@@ -20,12 +20,30 @@ enum PieceType
 struct Piece
 {
 	PieceType Type = PieceType::EMPTY;
+	
+	Piece() { }
+	
+	Piece(const Piece &piece)
+	{
+		Type = piece.Type;
+	};
 };
 
 struct Line
 {
 	uint32 CoordY = 0;
 	Piece PiecesArr[BOARD_COLUMNS];
+	
+	Line() { }
+	
+	Line(const Line &line)
+	{
+		CoordY = line.CoordY;
+		for(int i = 0; i < BOARD_COLUMNS; i++)
+		{
+			PiecesArr[i] = line.PiecesArr[i];
+		}
+	};
 };
 
 static Line EMPTY_LINE;

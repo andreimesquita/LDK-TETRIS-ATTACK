@@ -1,4 +1,4 @@
-static const uint32 WINDOW_WIDTH = 600;
+static const uint32 WINDOW_WIDTH = 800;
 static const uint32 WINDOW_HEIGHT = 800;
 static const float ASPECT_RATIO = 1.0f;
 static const uint32 PIECE_SIZE = 16;
