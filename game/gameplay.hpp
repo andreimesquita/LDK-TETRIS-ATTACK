@@ -76,32 +76,51 @@ namespace gameplay
 	//********************
 	// Update Logic
 	//********************
-	void moveCursor()
+	inline void processKeyDownAndSetCoord(Cursor &cursor, int &coord, int increment, uint32 keyCode)
 	{
-		Cursor &cursor = _gameState->cursor;
-		
-		if (input::isKeyDown(input::LDK_KEY_UP))
+		if (input::isKeyDown(keyCode))
 		{
-			cursor.yCoord += 1;
-		}
-		else if (input::isKeyDown(input::LDK_KEY_DOWN))
-		{
-			cursor.yCoord -= 1;
-		}
-		
-		if (input::isKeyDown(input::LDK_KEY_LEFT))
-		{
-			cursor.xCoord -= 1;
-		}
-		else if (input::isKeyDown(input::LDK_KEY_RIGHT))
-		{
-			cursor.xCoord += 1;
+			coord += increment;
+			cursor.totalHoldingDeltaTime = 0;
 		}
 	};
 	
-	void updateLogic(float deltaTime)
+	inline void processKeyHolding(Cursor &cursor, int &coord, int increment, float &deltaTime, uint32 keyCode)
 	{
-		moveCursor();
+		if (input::getKey(keyCode))
+		{
+			cursor.totalHoldingDeltaTime += deltaTime;
+			float decrement = (cursor.totalHoldingDeltaTime - 0.15f);
+			if (decrement < 0.0f) decrement = 0.0f;
+			int steps = (int) (increment * (decrement / 0.04f));
+			coord += steps;
+		}
+	};
+	
+	void moveCursor(float &deltaTime)
+	{
+		Cursor &cursor = _gameState->cursor;
+		
+		// handle button click
+		processKeyDownAndSetCoord(cursor, cursor.yCoord, 1, input::LDK_KEY_UP);
+		processKeyDownAndSetCoord(cursor, cursor.yCoord, -1, input::LDK_KEY_DOWN);
+		processKeyDownAndSetCoord(cursor, cursor.xCoord, -1, input::LDK_KEY_LEFT);
+		processKeyDownAndSetCoord(cursor, cursor.xCoord, 1, input::LDK_KEY_RIGHT);
+		
+		//handle button hold
+		processKeyHolding(cursor, cursor.yCoord, 1, deltaTime, input::LDK_KEY_UP);
+		processKeyHolding(cursor, cursor.yCoord, -1, deltaTime, input::LDK_KEY_DOWN);
+		processKeyHolding(cursor, cursor.xCoord, -1, deltaTime, input::LDK_KEY_LEFT);
+		processKeyHolding(cursor, cursor.xCoord, 1, deltaTime, input::LDK_KEY_RIGHT);
+		
+		//clamp coordinates
+		cursor.xCoord = clamp(cursor.xCoord, 0, (BOARD_COLUMNS - 2));
+		cursor.yCoord = clamp(cursor.yCoord, 0, (BOARD_LINES - 1));
+	};
+	
+	void updateLogic(float &deltaTime)
+	{
+		moveCursor(deltaTime);
 		
 		//TODO(andrei) move pieces upwards
 		//if the game is still running (pieces moving OR paused due to piece matching)

@@ -53,6 +53,7 @@ struct Cursor
 	int xCoord;
 	int yCoord;
 	renderer::Sprite sprite;
+	float totalHoldingDeltaTime;
 };
 
 static struct GameState
