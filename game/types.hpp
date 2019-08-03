@@ -48,11 +48,19 @@ struct Line
 
 static Line EMPTY_LINE;
 
+struct Cursor
+{
+	int xCoord;
+	int yCoord;
+	renderer::Sprite sprite;
+};
+
 static struct GameState
 {
 	renderer::SpriteBatch* spriteBatch;
 	Mat4 projMatrix;
 	HMaterial material;
+	Cursor cursor;
 	renderer::Sprite sprites[PIECE_TYPE_LENGTH];
 	Line lines[LINES_ARRAY_LENGTH];
 } *_gameState;

@@ -47,7 +47,7 @@ void gameStart(void* memory)
 {
 	_gameState = (GameState*)memory;
 	initializeLines();
-	view::initializeBoardSprites();
+	view::initializeView();
 	
 	unsigned int seed = (unsigned int)std::time(0);
 	std::srand(seed);
@@ -55,6 +55,7 @@ void gameStart(void* memory)
 
 void gameUpdate(float deltaTime)
 {
+	gameplay::updateLogic(deltaTime);
 	view::draw();
 };
 

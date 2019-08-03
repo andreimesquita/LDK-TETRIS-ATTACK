@@ -72,4 +72,41 @@ namespace gameplay
 		//TODO(andrei) block pieces' movement?
 		//TODO(andrei) trigger pieces' animation?
 	};
+	
+	//********************
+	// Update Logic
+	//********************
+	void moveCursor()
+	{
+		Cursor &cursor = _gameState->cursor;
+		
+		if (input::isKeyDown(input::LDK_KEY_UP))
+		{
+			cursor.yCoord += 1;
+		}
+		else if (input::isKeyDown(input::LDK_KEY_DOWN))
+		{
+			cursor.yCoord -= 1;
+		}
+		
+		if (input::isKeyDown(input::LDK_KEY_LEFT))
+		{
+			cursor.xCoord -= 1;
+		}
+		else if (input::isKeyDown(input::LDK_KEY_RIGHT))
+		{
+			cursor.xCoord += 1;
+		}
+	};
+	
+	void updateLogic(float deltaTime)
+	{
+		moveCursor();
+		
+		//TODO(andrei) move pieces upwards
+		//if the game is still running (pieces moving OR paused due to piece matching)
+			//TODO(andrei) Check if game is over (pieces have reached the top limit)
+			//TODO(andrei) Check for input
+				//Check matches
+	};
 };
