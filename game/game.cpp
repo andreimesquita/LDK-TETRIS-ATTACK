@@ -2,6 +2,10 @@
 #include <stdlib.h>
 #include <ctime>
 #include <cstdlib>
+#include <vector>
+#include <unordered_set>
+#include <iostream>
+#include <map>
 
 using namespace ldk;
 

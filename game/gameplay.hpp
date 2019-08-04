@@ -50,6 +50,88 @@ namespace gameplay
 		//TODO(andrei)
 	};
 	
+	class MatchNode
+	{
+		Vec2Int coord;
+	};
+	
+	void get(std::vector<Vec2Int> &match)
+	{
+		//TODO
+	};
+	
+	void horizontalAsd(Piece &pieceLeft,
+						std::unordered_set<Vec2Int> &knownCoordinates,
+						std::vector<Vec2Int> &matches)
+	{
+		//left
+		for (int i = (leftPiecePos.x - 1); i >= 0; i--)
+		{
+			Piece &leftPiece = getPieceInLine(line, i);
+			
+			if (leftPiece.Type != pieceLeft.Type) break;
+			
+			Vec2Int otherPiecePos = Vec2Int(i, line.CoordY);
+			
+			if (knownCoordinates.count(otherPiecePos) > 0) break;
+			
+			matches.push_back(otherPiecePos);
+			knownCoordinates.emplace(otherPiecePos);
+		}
+		
+		//right
+		for (int i = (leftPiecePos.x + 1); i < BOARD_COLUMNS; i++)
+		{
+			Piece &otherPiece = getPieceInLine(line, i);
+			
+			if (otherPiece.Type != pieceLeft.Type) break;
+			
+			Vec2Int otherPiecePos = Vec2Int(i, line.CoordY);
+			
+			if (knownCoordinates.count(otherPiecePos) > 0) break;
+			
+			matches.push_back(otherPiecePos);
+			knownCoordinates.emplace(otherPiecePos);
+		}
+	};
+	
+	void verticalAsd(Piece &pieceLeft,
+						std::unordered_set<Vec2Int> &knownCoordinates,
+						std::vector<Vec2Int> &matches)
+	{
+		//up
+		for (int i = (leftPiecePos.y + 1); i < BOARD_LINES; i++)
+		{
+			Line &upperLine = getLineByCoordinate(i);
+			Piece &upperPiece = getPieceInLine(upperLine, leftPiecePos.x);
+			
+			if (upperPiece.Type != pieceLeft.Type) break;
+			
+			Vec2Int upperPiecePos = Vec2Int(leftPiecePos.x, i);
+			
+			if (knownCoordinates.count(upperPiecePos) > 0) break;
+			
+			matches.push_back(upperPiecePos);
+			knownCoordinates.emplace(upperPiecePos);
+		}
+		
+		//down
+		for (int i = (leftPiecePos.y - 1); i >= 0; i--)
+		{
+			Line &lowerLine = getLineByCoordinate(i);
+			Piece &lowerPiece = getPieceInLine(lowerLine, leftPiecePos.x);
+			
+			if (lowerPiece.Type != pieceLeft.Type) break;
+			
+			Vec2Int upperPiecePos = Vec2Int(leftPiecePos.x, i);
+			
+			if (knownCoordinates.count(upperPiecePos) > 0) break;
+			
+			matches.push_back(upperPiecePos);
+			knownCoordinates.emplace(upperPiecePos);
+		}
+	};
+	
 	void swapPieces(const uint32 lineIndex, const uint32 columnLeft, const uint32 columnRight)
 	{
 		Line &line = getLineByCoordinate(lineIndex);
@@ -71,6 +153,51 @@ namespace gameplay
 		//TODO(andrei) animate piece swipe by:
 		//TODO(andrei) block pieces' movement?
 		//TODO(andrei) trigger pieces' animation?
+		//TODO(andrei) find matches
+		
+		//FIND MATCHES FOR LEFT PIECE
+		std::unordered_set<Vec2Int> knownCoordinates;
+		std::vector<Vec2Int> matches;
+		
+		Vec2Int leftPiecePos = Vec2Int(columnLeft, lineIndex);
+		knownCoordinates.emplace(leftPiecePos);
+		matches.push_back(leftPiecePos);
+		
+		//check matches for the left piece
+		horizontalAsd(pieceLeft, knownCoordinates, matches);
+		verticalAsd(pieceLeft knownCoordinates, matches);
+		
+		if (matches.size() >= 3)
+		{
+			int foundPieces = matches.size();
+			
+			for (int i = 0; i < foundPieces; i++)
+			{
+				Vec2Int &piecePosition = matches[i];
+				Line &line = getLineByCoordinate(piecePosition.y);
+				Piece &piece = getPieceInLine(line, piecePosition.x);
+				piece.Type = PieceType::EMPTY;
+			}
+		}
+		
+		//check matches for the right piece
+		horizontalAsd(pieceRight, knownCoordinates, matches);
+		verticalAsd(pieceRight knownCoordinates, matches);
+		
+		if (matches.size() >= 3)
+		{
+			int foundPieces = matches.size();
+			
+			for (int i = 0; i < foundPieces; i++)
+			{
+				Vec2Int &piecePosition = matches[i];
+				Line &line = getLineByCoordinate(piecePosition.y);
+				Piece &piece = getPieceInLine(line, piecePosition.x);
+				piece.Type = PieceType::EMPTY;
+			}
+		}
+		
+		//findSameNeighbours(line, columnRight, matches);
 	};
 	
 	//********************
@@ -118,9 +245,21 @@ namespace gameplay
 		cursor.yCoord = clamp(cursor.yCoord, 0, (BOARD_LINES - 1));
 	};
 	
+	void handleSwipePieces()
+	{
+		if (input::isKeyDown(input::LDK_KEY_CONTROL))
+		{
+			Cursor &cusor = _gameState->cursor;
+			uint32 leftColumn = (uint32) cusor.xCoord;
+			uint32 line = (uint32) cusor.yCoord;
+			swapPieces(line, leftColumn, leftColumn + 1);
+		}
+	};
+	
 	void updateLogic(float &deltaTime)
 	{
 		moveCursor(deltaTime);
+		handleSwipePieces();
 		
 		//TODO(andrei) move pieces upwards
 		//if the game is still running (pieces moving OR paused due to piece matching)

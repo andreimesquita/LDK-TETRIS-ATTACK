@@ -8,26 +8,6 @@ static const uint32 CURSOR_HEIGHT = (SCREEN_PIECE_SIZE * 1.1f);
 
 namespace view
 {
-	struct Vec2Int
-	{
-		int x;
-		int y;
-		
-		Vec2Int() { }
-		
-		Vec2Int(int _x, int _y)
-		{
-			x = _x;
-			y = _y;
-		}
-		
-		Vec2Int(const Vec2Int &other)
-		{
-			x = other.x;
-			y = other.y;
-		}
-	};
-	
 	//**********************
 	//* Utils
 	//**********************
