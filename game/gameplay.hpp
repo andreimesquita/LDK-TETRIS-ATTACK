@@ -100,14 +100,14 @@ namespace gameplay
 						std::vector<Vec2Int> &matches)
 	{
 		//up
-		for (int i = (leftPiecePos.y + 1); i < BOARD_LINES; i++)
+		for (int i = (sourcePiecePos.y + 1); i < BOARD_LINES; i++)
 		{
 			Line &upperLine = getLineByCoordinate(i);
-			Piece &upperPiece = getPieceInLine(upperLine, leftPiecePos.x);
+			Piece &upperPiece = getPieceInLine(upperLine, sourcePiecePos.x);
 			
 			if (upperPiece.Type != pieceLeft.Type) break;
 			
-			Vec2Int upperPiecePos = Vec2Int(leftPiecePos.x, i);
+			Vec2Int upperPiecePos = Vec2Int(sourcePiecePos.x, i);
 			
 			if (knownCoordinates.count(upperPiecePos) > 0) break;
 			
@@ -116,14 +116,14 @@ namespace gameplay
 		}
 		
 		//down
-		for (int i = (leftPiecePos.y - 1); i >= 0; i--)
+		for (int i = (sourcePiecePos.y - 1); i >= 0; i--)
 		{
 			Line &lowerLine = getLineByCoordinate(i);
-			Piece &lowerPiece = getPieceInLine(lowerLine, leftPiecePos.x);
+			Piece &lowerPiece = getPieceInLine(lowerLine, sourcePiecePos.x);
 			
 			if (lowerPiece.Type != pieceLeft.Type) break;
 			
-			Vec2Int upperPiecePos = Vec2Int(leftPiecePos.x, i);
+			Vec2Int upperPiecePos = Vec2Int(sourcePiecePos.x, i);
 			
 			if (knownCoordinates.count(upperPiecePos) > 0) break;
 			
